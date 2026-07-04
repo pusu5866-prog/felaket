@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hayatımdaki En Güzel Felaket</title>
+    <style>
+        :root {
+            --bg-color: #ffeef2;
+            --text-main: #6c4f57;
+            --text-accent: #d63384;
+            --rabbit-fur-1: #cfa88a;
+            --rabbit-fur-2: #bfa38a;
+            --rabbit-belly: #ffffff;
+            --pink-blush: rgba(255, 182, 193, 0.6);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 30%, #fff0f3 0%, #ffeef2 70%);
+            font-family: 'Georgia', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            text-align: center;
+            color: var(--text-main);
+            user-select: none;
+        }
+
+        /* --- Sinematik Sahne Alanı --- */
+        .scene {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            height: 280px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+        }
+
+        /* Gerçekçi Detaylı Tavşan Çizimleri (CSS & SVG Esintili Grafik) */
+        .rabbit-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            width: 100%;
+        }
+
+        .rabbit {
+            position: relative;
+            width: 80px;
+            height: 125px;
+            background: var(--rabbit-fur-1);
+            border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 25px rgba(108, 79, 87, 0.15);
+        }
+
+        /* Gerçekçi Uzun Kulaklar */
+        .rabbit::before, .rabbit::after {
+            content: '';
+            position: absolute;
+            top: -55px;
+            width: 20px;
+            height: 65px;
+            background: var(--rabbit-fur-1);
+            border-radius: 50% 50% 40% 40%;
+            transition: transform 1.2s ease;
+        }
+        
+        /* Gerçekçi kulak içi pembeliği ve gölgeler */
+        .rabbit-left::before { left: 12px; transform: rotate(-8px); box-shadow: inset 0 8px 0 #fbc4c4, inset -3px 0 0 rgba(0,0,0,0.05); }
+        .rabbit-left::after { right: 12px; transform: rotate(4px); box-shadow: inset 0 8px 0 #fbc4c4, inset 3px 0 0 rgba(0,0,0,0.05); }
+        .rabbit-right::before { left: 12px; transform: rotate(-4px); box-shadow: inset 0 8px 0 #fbc4c4, inset -3px 0 0 rgba(0,0,0,0.05); }
+        .rabbit-right::after { right: 12px; transform: rotate(8px); box-shadow: inset 0 8px 0 #fbc4c4, inset 3px 0 0 rgba(0,0,0,0.05); }
+
+        /* Gövde Detayları (Beyaz Karın Tüyleri) */
+        .belly {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 70px;
+            background: var(--rabbit-belly);
+            border-radius: 50% 50% 45% 45%;
+            opacity: 0.85;
+        }
+
+        /* Yüz Detayları */
+        .face {
+            position: absolute;
+            top: 25px;
+            width: 100%;
+            height: 40px;
+        }
+
+        .eye {
+            position: absolute;
+            top: 12px;
+            width: 6px;
+            height: 8px;
+            background: #2b1f22;
+            border-radius: 50%;
+            transition: all 0.5s ease;
+        }
+        .rabbit-left .eye-left { left: 24px; }
+        .rabbit-left .eye-right { right: 24px; }
+        .rabbit-right .eye-left { left: 24px; }
+        .rabbit-right .eye-right { right: 24px; }
+
+        .nose {
+            position: absolute;
+            top: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 4px;
+            background: #e29595;
+            border-radius: 50% 50% 40% 40%;
+        }
+
+        /* Yumuşak Patiler / Kollar */
+        .paw {
+            position: absolute;
+            top: 60px;
+            width: 32px;
+            height: 16px;
+            background: var(--rabbit-fur-1);
+            border-radius: 12px;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .rabbit-left .paw { right: -12px; transform: rotate(20px); transform-origin: left center; }
+        .rabbit-right .paw { left: -12px; transform: rotate(-20px); transform-origin: right center; }
+
+        /* Ayrışma ve Renk Tonlamaları */
+        .rabbit-left { margin-right: 50px; }
+        .rabbit-right { 
+            background: var(--rabbit-fur-2); 
+        }
+        .rabbit-right::before, .rabbit-right::after, .rabbit-right .paw { 
+            background: var(--rabbit-fur-2); 
+        }
+
+        /* --- Sarılma Animasyonu Aktif Hali --- */
+        .scene.hugged .rabbit-left {
+            transform: translateX(32px) rotate(3px);
+        }
+
+        .scene.hugged .rabbit-right {
+            transform: translateX(-32px) rotate(-3px);
+        }
+
+        .scene.hugged .rabbit-left .paw {
+            transform: rotate(-35px) scaleX(1.4);
+            right: -20px;
+            z-index: 5;
+        }
+
+        .scene.hugged .rabbit-right .paw {
+            transform: rotate(35px) scaleX(1.4);
+            left: -20px;
+            z-index: 5;
+        }
+
+        /* Sarılırken Huzurla Kapanan Gözler */
+        .scene.hugged .eye {
+            height: 2px;
+            top: 15px;
+            border-radius: 0;
+        }
+
+        /* --- Güneş Teşekkür Pankartı --- */
+        .sun-pendant {
+            position: absolute;
+            bottom: 160px;
+            background: #ffffff;
+            color: #b73e5c;
+            padding: 12px 26px;
+            border-radius: 30px;
+            font-size: 14.5px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            box-shadow: 0 12px 28px rgba(108, 79, 87, 0.12);
+            border: 1px solid rgba(214, 51, 132, 0.15);
+            opacity: 0;
+            transform: translateY(15px) scale(0.9);
+            transition: all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .scene.hugged .sun-pendant {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* --- Yazım Kurallarına Uygun Sinematik Metin --- */
+        .quote-box {
+            max-width: 85%;
+            width: 520px;
+            margin: 0 auto;
+            min-height: 80px;
+        }
+
+        .quote-text {
+            font-size: 20px;
+            line-height: 1.7;
+            color: var(--text-main);
+            font-weight: 400;
+            font-style: italic;
+            text-shadow: 0 1px 1px rgba(255,255,255,0.8);
+        }
+
+        .quote-text::before, .quote-text::after {
+            content: '"';
+            color: var(--text-accent);
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* --- Şık ve Minimalist Onay Kutusu --- */
+        .confirm-wrapper {
+            margin-top: 30px;
+        }
+
+        .confirm-label {
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px 28px;
+            border-radius: 30px;
+            background: #ffffff;
+            border: 1px solid rgba(108, 79, 87, 0.15);
+            box-shadow: 0 4px 12px rgba(108, 79, 87, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .confirm-label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(108, 79, 87, 0.08);
+            border-color: var(--text-accent);
+        }
+
+        .confirm-label input {
+            display: none;
+        }
+
+        .checkbox-view {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(108, 79, 87, 0.3);
+            border-radius: 6px;
+            margin-right: 12px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .confirm-label input:checked + .checkbox-view {
+            background: var(--text-accent);
+            border-color: var(--text-accent);
+        }
+
+        .checkbox-view::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .confirm-label input:checked + .checkbox-view::after {
+            opacity: 1;
+        }
+
+        .label-title {
+            font-size: 15px;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* --- Gelişmiş Yoğun Kalp Yağmuru Efekti --- */
+        .falling-heart {
+            position: fixed;
+            color: #ff4d6d;
+            font-size: 20px;
+            pointer-events: none;
+            animation: rainDown linear forwards;
+            z-index: 100;
+        }
+
+        @keyframes rainDown {
+            0% {
+                transform: translateY(-5vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(105vh) rotate(360deg) scale(1.1);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body onclick="playFelaket()">
+
+    <!-- Ezhel - Felaket (Arka Plan Atmosferi İçin Telifsiz Müzik Yönlendirmeli Yapı) -->
+    <!-- İstediğiniz .mp3 dosyasını bu dizine atıp adını "felaket.mp3" yaparak da güncelleyebilirsiniz -->
+    <audio id="felaket-audio" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Sahne -->
+    <div class="scene" id="canvas-stage">
+        <div class="sun-pendant">Her gün bana güneş olduğunuz için teşekkürler! ☀️</div>
+        
+        <div class="rabbit-container">
+            <!-- Sol Tavşan -->
+            <div class="rabbit rabbit-left">
+                <div class="belly"></div>
+                <div class="face">
+                    <div class="eye eye-left"></div>
+                    <div class="eye eye-right"></div>
+                    <div class="nose"></div>
+                </div>
+                <div class="paw"></div>
+            </div>
+
+            <!-- Sağ Tavşan -->
+            <div class="rabbit rabbit-right">
+                <div class="belly"></div>
+                <div class="face">
+                    <div class="eye eye-left"></div>
+                    <div class="eye eye-right"></div>
+                    <div class="nose"></div>
+                </div>
+                <div class="paw"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Yazım Kurallarına Uygun Sinematik Aşk Sözü -->
+    <div class="quote-box">
+        <p class="quote-text">
+            Sen benim hayatıma gelen en güzel, en tatlı felaketsin. Tüm ezberlerimi bozan, kalbimi ilk günkü gibi heyecanla çarptıran o eşsiz ritim sensin. İyi ki geldin ve iyi ki benim oldun.
+        </p>
+    </div>
+
+    <!-- Onay Kutusu -->
+    <div class="confirm-wrapper">
+        <label class="confirm-label">
+            <input type="checkbox" id="trigger-input" onchange="animateLove(this)">
+            <div class="checkbox-view"></div>
+            <span class="label-title">Onaylıyorum</span>
+        </label>
+    </div>
+
+    <script>
+        let isAudioPlaying = false;
+
+        // Ezhel - Felaket ritmine geçiş fonksiyonu
+        function playFelaket() {
+            if (!isAudioPlaying) {
+                const audio = document.getElementById('felaket-audio');
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Etkileşim bekleniyor..."));
+                isAudioPlaying = true;
+            }
+        }
+
+        // Onay kutusu tetiklendiğinde sarılma ve kalp yağmuru başlar
+        function animateLove(checkbox) {
+            const stage = document.getElementById('canvas-stage');
+            if (checkbox.checked) {
+                stage.classList.add('hugged');
+                startDenseHeartRain();
+            } else {
+                stage.classList.remove('hugged');
+            }
+        }
+
+        // İstediğiniz o yoğun ve romantik kalp yağmuru fonksiyonu
+        function startDenseHeartRain() {
+            const heartTypes = ['❤', '💖', '💗', '💕', '❣'];
+            // Toplamda yoğun bir akış olması için döngü sayısını artırdık
+            for (let i = 0; i < 60; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('falling-heart');
+                    
+                    // Rastgele kalp türü ve konumu seçimi
+                    heart.innerHTML = heartTypes[Math.floor(Math.random() * heartTypes.length)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    
+                    // Boyut ve hız varyasyonları
+                    const size = Math.random() * 18 + 14;
+                    heart.style.fontSize = size + 'px';
+                    heart.style.animationDuration = (Math.random() * 2.5 + 2) + 's';
+                    
+                    // Pembe ve kırmızı tonları karıştırma
+                    const opacities = Math.random() * 0.4 + 0.6;
+                    heart.style.opacity = opacities;
+                    
+                    document.body.appendChild(heart);
+                    
+                    // Belleği temizlemek için düşen kalbi siliyoruz
+                    setTimeout(() => { heart.remove(); }, 4500);
+                }, i * 90); // Kalplerin arka arkaya düşme sıklığı
+            }
+        }
+    </script>
+</body>
+</html>
